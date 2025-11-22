@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Timer App</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+    <div id="greetingBox" style="
+    padding:15px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 0 5px rgba(0,0,0,0.1);
+    width:260px;
+    text-align:center;
+    margin-bottom:20px;
+">
+    <div style="font-size:20px; font-weight:bold; margin-bottom:10px;">
+        你好，努力的你
+    </div>
+
+    <div style="font-size:16px; margin-bottom:8px;">现在是</div>
+
+    <div id="clockTime" style="font-size:24px; font-weight:bold;">00:00:00</div>
+    <div id="clockDate" style="font-size:18px; margin-top:5px;">YYYY-MM-DD</div>
+</div>
+
+
+
+<h1 class="title">Timer Website</h1>
+
+<nav class="nav">
+  <button onclick="showPage('exam')">考试模式</button>
+  <button onclick="showPage('countdown')">普通倒计时</button>
+  <button onclick="showPage('countup')">正计时</button>
+  <button onclick="showPage('todo')">To-Do</button>
+</nav>
+
+<!-- ===== 考试模式 ===== -->
+<section id="exam" class="page">
+  <h2>考试模式</h2>
+
+  <label>科目名称：</label>
+  <input id="examTitle" /><br><br>
+
+  <div id="examParts"></div>
+
+  <button onclick="addExamPart()">添加部分</button>
+  <button onclick="startExam()">开始考试</button>
+
+  <h3>计时：<span id="examTimer">00:00</span></h3>
+</section>
+
+
+<!-- ===== 普通倒计时 ===== -->
+ <section id="countdown" class="page">
+  <h2>普通倒计时</h2>
+<label>输入分钟：</label>
+  <input type="number" id="focusCountdownMin">
+
+  <button onclick="startFocusCountdown()">开始</button>
+  <button onclick="stopFocusCountdown()">暂停</button>
+  <button onclick="resetFocusCountdown()">重置</button>
+
+  <h3>剩余：<span id="focusCountdownDisplay">00:00</span></h3>
+
+ </section>
+<!-- ===== 正计时模式 ===== -->
+<section id="countup" class="page">
+  <h2>正计时</h2>
+  <button onclick="startCountUp()">开始</button>
+  <button onclick="stopCountUp()">停止</button>
+  <button onclick="resetCountUp()">重置</button>
+
+  <h3>计时：<span id="countupDisplay">00:00:00</span></h3>
+</section>
+
+
+<!-- ===== ToDo ===== -->
+<section id="todo" class="page">
+  <h2>To-Do List</h2>
+
+  <input id="todoInput" placeholder="输入任务" />
+  <button onclick="addTodo()">添加</button>
+
+  <h3>待办：</h3>
+  <ul id="todoList"></ul>
+
+  <h3>已完成：</h3>
+  <ul id="doneList"></ul>
+</section>
+
+<script src="exam.js"></script>
+<script src="timer.js"></script>
+<script src="todo.js"></script>
+
+<script>
+function showPage(name){
+  document.querySelectorAll(".page").forEach(p=>p.style.display="none");
+  document.getElementById(name).style.display="block";
+}
+
+
+function updateClock(){
+  let now = new Date();
+
+  // 时间
+  let h = now.getHours().toString().padStart(2, '0');
+  let m = now.getMinutes().toString().padStart(2, '0');
+  let s = now.getSeconds().toString().padStart(2, '0');
+
+  // 日期
+  let year = now.getFullYear();
+  let month = (now.getMonth() + 1).toString().padStart(2, '0');
+  let day = now.getDate().toString().padStart(2, '0');
+
+  document.getElementById("clockTime").textContent = `${h}:${m}:${s}`;
+  document.getElementById("clockDate").textContent = `${year}-${month}-${day}`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+</script>
+
+
+</body>
+</html>
