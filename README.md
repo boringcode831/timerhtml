@@ -1,5 +1,7 @@
 # timerhtml（又名为专注计时器）
 <b>这是一个计时器html网页<b>
+https://boringcode831.github.io/timerhtml/ 此网页目前已经被Publish
+日后有更新会发新的资源
 
 
 入网页你会看到的
