@@ -1,5 +1,4 @@
-// ========== 普通倒计时 ==========
-let cdSec = 0, cdTimer = null;
+let cdSec = 0, cdTimer = null, cdOver = 0;
 
 function startFocusCountdown(){
   let min = parseInt(document.getElementById("focusCountdownMin").value);
@@ -8,16 +7,29 @@ function startFocusCountdown(){
     if (cdSec === 0 && min > 0) cdSec = min * 60;
 
     cdTimer = setInterval(()=>{
+
       if (cdSec > 0) {
         cdSec--;
-        let m = String(Math.floor(cdSec/60)).padStart(2,'0');
-        let s = String(cdSec%60).padStart(2,'0');
-        document.getElementById("focusCountdownDisplay").textContent = `${m}:${s}`;
       } else {
-        stopFocusCountdown();
-        alert("倒计时结束！");
+        cdOver++;   // 超时开始累计
       }
+
+      updateCountdownDisplay();
+
     },1000);
+  }
+}
+
+function updateCountdownDisplay() {
+  if (cdSec > 0) {
+    let m = String(Math.floor(cdSec/60)).padStart(2,'0');
+    let s = String(cdSec%60).padStart(2,'0');
+    document.getElementById("focusCountdownDisplay").textContent = `${m}:${s}`;
+  } else {
+    let om = String(Math.floor(cdOver/60)).padStart(2,'0');
+    let os = String(cdOver%60).padStart(2,'0');
+    document.getElementById("focusCountdownDisplay").textContent =
+      `已超时：${om}:${os}`;
   }
 }
 
@@ -29,32 +41,6 @@ function stopFocusCountdown(){
 function resetFocusCountdown(){
   stopFocusCountdown();
   cdSec = 0;
+  cdOver = 0;
   document.getElementById("focusCountdownDisplay").textContent = "00:00";
-}
-
-
-// ========== 正计时 ==========
-let cuSec = 0, cuTimer = null;
-
-function startCountUp(){
-  if (!cuTimer){
-    cuTimer = setInterval(()=>{
-      cuSec++;
-      let h = String(Math.floor(cuSec/3600)).padStart(2,'0');
-      let m = String(Math.floor((cuSec%3600)/60)).padStart(2,'0');
-      let s = String(cuSec%60).padStart(2,'0');
-      document.getElementById("countupDisplay").textContent = `${h}:${m}:${s}`;
-    },1000);
-  }
-}
-
-function stopCountUp(){
-  clearInterval(cuTimer);
-  cuTimer = null;
-}
-
-function resetCountUp(){
-  stopCountUp();
-  cuSec = 0;
-  document.getElementById("countupDisplay").textContent = "00:00:00";
 }
