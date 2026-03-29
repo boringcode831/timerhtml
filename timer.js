@@ -1,8 +1,7 @@
-// 在 timer.js 顶部定义变量
+// timer.js 完整版
 let cdSec = 0, cdTimer = null, cdOver = 0;
 
 function startFocusCountdown() {
-  // 获取 HTML 元素
   const inputField = document.getElementById("focusProjectInput");
   const displayDiv = document.getElementById("currentProjectDisplay");
   const labelText = document.getElementById("projectLabelText");
@@ -15,16 +14,13 @@ function startFocusCountdown() {
       return;
     }
 
-    // 逻辑：如果是刚开始（秒数为0），则锁定项目名
     if (cdSec === 0) {
       let taskName = inputField.value.trim() || "无题任务";
-      
-      // UI 切换：隐藏输入框，显示项目名称
       inputField.style.display = "none"; 
       displayDiv.style.display = "block";
       labelText.textContent = taskName;
-
       cdSec = min * 60;
+      cdOver = 0; // 重置超时计数
     }
 
     cdTimer = setInterval(() => {
@@ -38,15 +34,36 @@ function startFocusCountdown() {
   }
 }
 
-// 记得在 reset 函数里把它们变回来！
-function resetFocusCountdown() {
+// 补全这个显示函数！
+function updateCountdownDisplay() {
+  const display = document.getElementById("focusCountdownDisplay");
+  if (cdSec > 0) {
+    let m = String(Math.floor(cdSec / 60)).padStart(2, '0');
+    let s = String(cdSec % 60).padStart(2, '0');
+    display.textContent = `${m}:${s}`;
+    display.style.color = "black"; // 正常倒计时颜色
+  } else {
+    let om = String(Math.floor(cdOver / 60)).padStart(2, '0');
+    let os = String(cdOver % 60).padStart(2, '0');
+    display.textContent = `已超时：${om}:${os}`;
+    display.style.color = "red"; // 超时变红
+  }
+}
+
+function stopFocusCountdown() {
   clearInterval(cdTimer);
   cdTimer = null;
+}
+
+function resetFocusCountdown() {
+  stopFocusCountdown();
   cdSec = 0;
   cdOver = 0;
 
   // 恢复 UI
-  document.getElementById("focusProjectInput").style.display = "inline-block";
-  document.getElementById("currentProjectDisplay").style.display = "none";
+  const inputField = document.getElementById("focusProjectInput");
+  const displayDiv = document.getElementById("currentProjectDisplay");
+  if(inputField) inputField.style.display = "inline-block";
+  if(displayDiv) displayDiv.style.display = "none";
   document.getElementById("focusCountdownDisplay").textContent = "00:00";
 }
