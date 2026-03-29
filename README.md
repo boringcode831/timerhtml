@@ -4,7 +4,8 @@ https://boringcode831.github.io/timerhtml/<br>
 此网页目前已经被Publish<br>
 日后有更新会发新的资源<br>
 
-# 目前进行部分更新，请勿先使用，会在12/5之前完成！，请等待通知！
+#0329 log
+目前已在todo界面加了能显示日期的小代码
 
 
 
