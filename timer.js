@@ -1,10 +1,11 @@
+// 在 timer.js 顶部定义变量
 let cdSec = 0, cdTimer = null, cdOver = 0;
-let currentProject = ""; // 记录当前项目
 
 function startFocusCountdown() {
-  const projectInput = document.getElementById("focusProjectInput");
-  const projectDisplay = document.getElementById("currentProjectDisplay");
-  const projectLabel = document.getElementById("projectLabel");
+  // 获取 HTML 元素
+  const inputField = document.getElementById("focusProjectInput");
+  const displayDiv = document.getElementById("currentProjectDisplay");
+  const labelText = document.getElementById("projectLabelText");
   const minInput = document.getElementById("focusCountdownMin");
 
   if (!cdTimer) {
@@ -14,16 +15,16 @@ function startFocusCountdown() {
       return;
     }
 
-    // 第一次启动时记录项目名
+    // 逻辑：如果是刚开始（秒数为0），则锁定项目名
     if (cdSec === 0) {
-      currentProject = projectInput.value.trim() || "无题专注";
-      cdSec = min * 60;
+      let taskName = inputField.value.trim() || "无题任务";
       
-      // UI 切换：隐藏输入框，显示项目名
-      projectInput.style.display = "none";
-      projectDisplay.style.display = "block";
-      projectDisplay.textContent = `正在进行：${currentProject}`;
-      projectLabel.textContent = currentProject;
+      // UI 切换：隐藏输入框，显示项目名称
+      inputField.style.display = "none"; 
+      displayDiv.style.display = "block";
+      labelText.textContent = taskName;
+
+      cdSec = min * 60;
     }
 
     cdTimer = setInterval(() => {
@@ -37,22 +38,15 @@ function startFocusCountdown() {
   }
 }
 
-// updateCountdownDisplay 和 stopFocusCountdown 保持你之前的逻辑即可
-
+// 记得在 reset 函数里把它们变回来！
 function resetFocusCountdown() {
-  stopFocusCountdown();
+  clearInterval(cdTimer);
+  cdTimer = null;
   cdSec = 0;
   cdOver = 0;
-  currentProject = "";
 
   // 恢复 UI
-  const projectInput = document.getElementById("focusProjectInput");
-  const projectDisplay = document.getElementById("currentProjectDisplay");
-  const projectLabel = document.getElementById("projectLabel");
-
-  projectInput.value = "";
-  projectInput.style.display = "inline-block";
-  projectDisplay.style.display = "none";
-  projectLabel.textContent = "未开始";
+  document.getElementById("focusProjectInput").style.display = "inline-block";
+  document.getElementById("currentProjectDisplay").style.display = "none";
   document.getElementById("focusCountdownDisplay").textContent = "00:00";
 }
