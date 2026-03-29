@@ -1,12 +1,12 @@
 let cdSec = 0, cdTimer = null, cdOver = 0;
-let currentProject = ""; // 新增：用于存储当前专注的项目名称
+let currentProject = ""; // 记录当前项目
 
 function startFocusCountdown() {
   const projectInput = document.getElementById("focusProjectInput");
   const projectDisplay = document.getElementById("currentProjectDisplay");
+  const projectLabel = document.getElementById("projectLabel");
   const minInput = document.getElementById("focusCountdownMin");
 
-  // 1. 获取并锁定项目名称
   if (!cdTimer) {
     let min = parseInt(minInput.value);
     if (isNaN(min) || min <= 0) {
@@ -14,59 +14,45 @@ function startFocusCountdown() {
       return;
     }
 
-    // 如果是第一次开始，记录项目名称并切换 UI
+    // 第一次启动时记录项目名
     if (cdSec === 0) {
       currentProject = projectInput.value.trim() || "无题专注";
       cdSec = min * 60;
       
-      // 隐藏输入框，显示正在进行的任务名称（营造仪式感）
+      // UI 切换：隐藏输入框，显示项目名
       projectInput.style.display = "none";
       projectDisplay.style.display = "block";
-      projectDisplay.textContent = `正在专注：${currentProject}`;
+      projectDisplay.textContent = `正在进行：${currentProject}`;
+      projectLabel.textContent = currentProject;
     }
 
     cdTimer = setInterval(() => {
       if (cdSec > 0) {
         cdSec--;
       } else {
-        cdOver++; // 超时开始累计
+        cdOver++;
       }
       updateCountdownDisplay();
     }, 1000);
   }
 }
 
-function updateCountdownDisplay() {
-  const display = document.getElementById("focusCountdownDisplay");
-  if (cdSec > 0) {
-    let m = String(Math.floor(cdSec / 60)).padStart(2, '0');
-    let s = String(cdSec % 60).padStart(2, '0');
-    display.textContent = `${m}:${s}`;
-  } else {
-    // 变红或者加提示，提醒用户已超时
-    let om = String(Math.floor(cdOver / 60)).padStart(2, '0');
-    let os = String(cdOver % 60).padStart(2, '0');
-    display.innerHTML = `<span style="color:red;">超时：${om}:${os}</span>`;
-  }
-}
-
-function stopFocusCountdown() {
-  clearInterval(cdTimer);
-  cdTimer = null;
-}
+// updateCountdownDisplay 和 stopFocusCountdown 保持你之前的逻辑即可
 
 function resetFocusCountdown() {
   stopFocusCountdown();
   cdSec = 0;
   cdOver = 0;
   currentProject = "";
-  
-  // 恢复 UI 状态
+
+  // 恢复 UI
   const projectInput = document.getElementById("focusProjectInput");
   const projectDisplay = document.getElementById("currentProjectDisplay");
-  
+  const projectLabel = document.getElementById("projectLabel");
+
   projectInput.value = "";
-  projectInput.style.display = "block";
+  projectInput.style.display = "inline-block";
   projectDisplay.style.display = "none";
+  projectLabel.textContent = "未开始";
   document.getElementById("focusCountdownDisplay").textContent = "00:00";
 }
