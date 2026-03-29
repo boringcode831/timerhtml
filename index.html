@@ -62,14 +62,24 @@
 <!-- ===== 普通倒计时 ===== -->
  <section id="countdown" class="page">
   <h2>普通倒计时</h2>
-<label>输入分钟：</label>
-  <input type="number" id="focusCountdownMin">
 
+  <div style="margin-bottom: 10px;">
+    <label>专注项目：</label>
+    <input type="text" id="focusProjectInput" placeholder="例如：写数学作业">
+    <div id="currentProjectDisplay" style="display:none; font-weight:bold; color:#555; margin-top:5px;"></div>
+  </div>
+
+  <label>输入分钟：</label>
+  <input type="number" id="focusCountdownMin" style="width: 50px;">
+
+  <br><br>
   <button onclick="startFocusCountdown()">开始</button>
   <button onclick="stopFocusCountdown()">暂停</button>
   <button onclick="resetFocusCountdown()">重置</button>
 
+  <h3>项目：<span id="projectLabel">未开始</span></h3>
   <h3>剩余：<span id="focusCountdownDisplay">00:00</span></h3>
+</section>
 
  </section>
 <!-- ===== 正计时模式 ===== -->
