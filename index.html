@@ -60,28 +60,30 @@
 
 
 <!-- ===== 普通倒计时 ===== -->
- <section id="countdown" class="page">
-  <h2>普通倒计时</h2>
+<section id="countdown" class="page">
+  <h2>普通倒计时模式</h2>
 
-  <div style="margin-bottom: 10px;">
-    <label>专注项目：</label>
-    <input type="text" id="focusProjectInput" placeholder="例如：写数学作业">
-    <div id="currentProjectDisplay" style="display:none; font-weight:bold; color:#555; margin-top:5px;"></div>
+  <div style="margin-bottom: 15px; background: #f9f9f9; padding: 10px; border-radius: 8px;">
+    <label>🎯 我要专注做：</label>
+    <input type="text" id="focusProjectInput" placeholder="输入任务名称..." style="padding: 5px; width: 180px;">
+    
+    <div id="currentProjectDisplay" style="display:none; color: #2c3e50; font-weight: bold; font-size: 1.1em; margin-top: 5px;">
+      正在进行：<span id="projectLabelText"></span>
+    </div>
   </div>
 
   <label>输入分钟：</label>
-  <input type="number" id="focusCountdownMin" style="width: 50px;">
+  <input type="number" id="focusCountdownMin" value="25" style="width: 50px;">
 
-  <br><br>
-  <button onclick="startFocusCountdown()">开始</button>
-  <button onclick="stopFocusCountdown()">暂停</button>
-  <button onclick="resetFocusCountdown()">重置</button>
+  <div style="margin-top: 15px;">
+    <button onclick="startFocusCountdown()">开始专注</button>
+    <button onclick="stopFocusCountdown()">暂停</button>
+    <button onclick="resetFocusCountdown()">重置</button>
+  </div>
 
-  <h3>项目：<span id="projectLabel">未开始</span></h3>
-  <h3>剩余：<span id="focusCountdownDisplay">00:00</span></h3>
+  <hr>
+  <h3>剩余时间：<span id="focusCountdownDisplay" style="font-family: monospace; font-size: 1.5em;">00:00</span></h3>
 </section>
-
- </section>
 <!-- ===== 正计时模式 ===== -->
 <section id="countup" class="page">
   <h2>正计时</h2>
